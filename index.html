@@ -1,20 +1,160 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Deferidos do Dia</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+padding:20px;
+max-width:1200px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,.1);
+margin-bottom:20px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+}
+
+button{
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+td,th{
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+</style>
+
 </head>
+<body>
 
-<body style="font-family:Arial;padding:30px">
+<h1>🚀 Deferidos do Dia</h1>
 
-<h1>🚀 Sistema Deferidos do Dia</h1>
+<div class="card">
 
-<p>Yuri Rocha</p>
-<p>Gabriela Reyes</p>
-<p>Luana Vianna</p>
-<p>Helena Beatriz</p>
-<p>Maristela Santos</p>
+<h2>Novo Registro</h2>
 
-<h2>Sistema em construção</h2>
+<select id="analista">
+<option>Yuri Rocha</option>
+<option>Gabriela Reyes</option>
+<option>Luana Vianna</option>
+<option>Helena Beatriz</option>
+</select>
+
+<input id="nome" placeholder="Nome">
+
+<input id="documento" placeholder="CPF/CNPJ">
+
+<select id="tipo">
+<option>Credenciamento</option>
+<option>Alteração</option>
+<option>Cancelamento</option>
+<option>Suspensão</option>
+<option>Reativação</option>
+</select>
+
+<button onclick="salvar()">
+Registrar
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Registros</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Analista</th>
+<th>Nome</th>
+<th>Documento</th>
+<th>Processo</th>
+</tr>
+</thead>
+
+<tbody id="dados"></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+let registros =
+JSON.parse(localStorage.getItem("registros"))
+|| [];
+
+function atualizar(){
+
+dados.innerHTML =
+registros.map(r => `
+<tr>
+<td>${r.analista}</td>
+<td>${r.nome}</td>
+<td>${r.documento}</td>
+<td>${r.tipo}</td>
+</tr>
+`).join('');
+
+localStorage.setItem(
+'registros',
+JSON.stringify(registros)
+);
+
+}
+
+function salvar(){
+
+registros.push({
+
+analista:
+analista.value,
+
+nome:
+nome.value,
+
+documento:
+documento.value,
+
+tipo:
+tipo.value
+
+});
+
+nome.value='';
+documento.value='';
+
+atualizar();
+
+}
+
+atualizar();
+
+</script>
 
 </body>
 </html>
